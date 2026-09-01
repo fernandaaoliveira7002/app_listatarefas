@@ -5,65 +5,48 @@ class ListaTarefaPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, dynamic>> tarefas = [
+      {"titulo": 'Fazer compras', 'situacao': false},
+      {"titulo": 'Pagar cartão', 'situacao': false},
+      {"titulo": 'Terminar o Empreenda', 'situacao': false},
+      {"titulo": 'Vir no casa aberta senac', 'situacao': true},
+      {"titulo": 'Exame médico', 'situacao': true},
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Minhas Tarefas"),
         centerTitle: true,
       ),
-      body: ListView(
+      body: ListView.builder(
         padding: EdgeInsets.all(12),
-        children: [
-          Card(
+        itemCount: tarefas.length,
+        itemBuilder: (context, index) {
+          final tarefa = tarefas[index];
+          final bool situacao = tarefa['situacao'];
+
+          return Card(
             child: ListTile(
               leading: Icon(
-                Icons.check_circle,
-                color: Colors.green,
+                situacao ? Icons.check_circle : Icons.circle_outlined,
+                color: situacao ? Colors.green : Colors.grey,
               ),
               title: Text(
-                "Configurar o ambiente de desenvolvimento",
-                style: TextStyle(decoration: TextDecoration.lineThrough),
+                tarefa['titulo'],
+                style: TextStyle(
+                  decoration: situacao
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none,
+                ),
               ),
-              subtitle: Text("Concluída"),
+              subtitle: Text(situacao ? "Concluída" : 'Pendente'),
               trailing: Icon(
                 Icons.delete_outline,
                 color: Colors.grey,
               ),
             ),
-          ),
-          Card(
-            child: ListTile(
-              leading: Icon(
-                Icons.circle_outlined,
-                color: Colors.blueGrey,
-              ),
-              title: Text(
-                "Fazer a atividade Flutter",
-              ),
-              subtitle: Text("Pendente"),
-              trailing: Icon(
-                Icons.delete_outline,
-                color: Colors.grey,
-              ),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              leading: Icon(
-                Icons.check_circle,
-                color: Colors.green,
-              ),
-              title: Text(
-                "Arrumar um emprego",
-                style: TextStyle(decoration: TextDecoration.lineThrough),
-              ),
-              subtitle: Text("Concluída"),
-              trailing: Icon(
-                Icons.delete_outline,
-                color: Colors.grey,
-              ),
-            ),
-          ),
-        ],
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
@@ -75,3 +58,26 @@ class ListaTarefaPage extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+  // Card(
+  //           child: ListTile(
+  //             leading: Icon(
+  //               Icons.check_circle,
+  //               color: Colors.green,
+  //             ),
+  //             title: Text(
+  //               "Configurar o ambiente de desenvolvimento",
+  //               style: TextStyle(decoration: TextDecoration.lineThrough),
+  //             ),
+  //             subtitle: Text("Concluída"),
+  //             trailing: Icon(
+  //               Icons.delete_outline,
+  //               color: Colors.grey,
+  //             ),
+  //           ),
+  //         ),
